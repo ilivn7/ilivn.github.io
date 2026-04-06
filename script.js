@@ -32,22 +32,20 @@ document.querySelectorAll('a, .node, .v-cell, .obj-col, .nav-dot').forEach(el =>
   });
 });
 
-/* ── GESTION DU FOND DE PARTICULES (TEMPÊTE DE NEIGE OCCULTE) ── */
+/* ── GESTION DU FOND DE PARTICULES (OPACITÉ BOOSTÉE) ── */
 const cv = document.getElementById('bg-canvas');
 const cx = cv.getContext('2d');
 function resize() { cv.width = window.innerWidth; cv.height = window.innerHeight; }
 resize();
 window.addEventListener('resize', resize);
 
-// NOMBRE DE FLOCONS AUGMENTÉ DRASTIQUEMENT (TEMPÊTE)
-// On passe de 80 à 280 particules pour un effet très dense
 const pts = Array.from({ length: 280 }, () => ({
   x: Math.random() * window.innerWidth,
   y: Math.random() * window.innerHeight,
-  vx: (Math.random() - 0.5) * 0.3,       // Balancement horizontal
-  vy: Math.random() * 0.7 + 0.3,         // Chute variée
-  r: Math.random() * 1.8 + 0.3,          // Taille variée
-  a: Math.random() * 0.6 + 0.15,         // Brillance variée
+  vx: (Math.random() - 0.5) * 0.3,
+  vy: Math.random() * 0.7 + 0.3,
+  r: Math.random() * 2.5 + 0.8,          // Flocons légèrement plus gros
+  a: Math.random() * 0.5 + 0.5,          // OPACITÉ BOOSTÉE (entre 50% et 100%)
   life: Math.random() * 400,
   max: Math.random() * 300 + 200
 }));
@@ -55,20 +53,18 @@ const pts = Array.from({ length: 280 }, () => ({
 (function draw() {
   cx.clearRect(0, 0, cv.width, cv.height);
   pts.forEach(p => {
-    // Mouvement avec effet de vent/vague
     p.x += p.vx + Math.sin(p.life * 0.015) * 0.3;
     p.y += p.vy;
     p.life++;
 
-    // Scintillement
+    // Le scintillement garde les flocons bien visibles
     const a = p.a * Math.sin((p.life / p.max) * Math.PI);
 
     cx.beginPath();
     cx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-    cx.fillStyle = `rgba(0,255,255,${a})`; // flocons cyan
+    cx.fillStyle = `rgba(0, 255, 255, ${a})`; 
     cx.fill();
 
-    // Réapparition en haut quand elles sortent de l'écran
     if (p.life > p.max || p.y > cv.height + 10) {
       p.x = Math.random() * cv.width;
       p.y = -5;
@@ -76,14 +72,10 @@ const pts = Array.from({ length: 280 }, () => ({
       p.max = Math.random() * 300 + 200;
       p.vx = (Math.random() - 0.5) * 0.3;
       p.vy = Math.random() * 0.7 + 0.3;
-      p.r = Math.random() * 1.8 + 0.3;
-      p.a = Math.random() * 0.6 + 0.15;
+      p.r = Math.random() * 2.5 + 0.8;       // Flocons légèrement plus gros
+      p.a = Math.random() * 0.5 + 0.5;       // OPACITÉ BOOSTÉE
     }
   });
-
-  // NOTE TECHNIQUE : J'ai supprimé la boucle des connexions (toile d'araignée)
-  // car avec 280 particules, cela ralentirait trop le site et masquerait la neige.
-  // Maintenant, c'est une pure tempête de flocons.
 
   requestAnimationFrame(draw);
 })();
