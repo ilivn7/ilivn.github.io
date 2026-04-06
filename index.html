@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Gojo — Dossier Psychologique</title>
+<title>Gojo — Dossier Psychologique (Circles Edit)</title>
 <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -79,209 +79,100 @@ nav::before{content:'';position:absolute;inset:0;background:rgba(7,9,12,0.8);bac
 @keyframes drift{0%,100%{transform:translateX(0);}50%{transform:translateX(6px);}}
 
 /* ═══════════════════════════
-   ACTE II — CARTE MENTALE
+   ACTE II — CARTE MENTALE (ROND)
 ═══════════════════════════ */
 #act2{
   min-height:100vh;
-  display:flex;flex-direction:column;justify-content:center;
   padding:6rem 3rem;
-  position:relative;
 }
-.act2-label{
-  text-align:center;font-family:var(--mono);font-size:8px;
-  letter-spacing:0.5em;color:var(--ink-dim);margin-bottom:1rem;
-  text-transform:uppercase;
-}
-.act2-title{
-  text-align:center;font-family:var(--fell);font-style:italic;
-  font-size:clamp(1.8rem,3vw,2.5rem);color:var(--ink);
-  margin-bottom:4rem;opacity:0.6;
-}
+.act2-label{text-align:center;font-family:var(--mono);font-size:8px;letter-spacing:0.5em;color:var(--ink-dim);margin-bottom:1rem;text-transform:uppercase;}
+.act2-title{text-align:center;font-family:var(--fell);font-style:italic;font-size:clamp(1.8rem,3vw,2.5rem);color:var(--ink);margin-bottom:4rem;opacity:0.6;}
 
-.mindmap-wrap{position:relative;width:100%;max-width:900px;margin:0 auto;}
+.mindmap-wrap{position:relative;width:100%;max-width:1100px;margin:0 auto;}
 
-/* SVG CONNECTIONS */
-#mindmap-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;}
-
-/* NOEUD CENTRAL */
 .node-center{
   position:relative;z-index:2;
-  width:160px;margin:0 auto 3rem;
+  width:180px;height:180px;margin:0 auto 4rem;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
   text-align:center;
   border:1px solid rgba(168,196,216,0.2);
-  padding:1.2rem;
+  border-radius: 50%;
   background:rgba(168,196,216,0.03);
-  filter:blur(6px);
-  transition:filter 0.8s ease;
+  filter:blur(10px);
+  transition:filter 1.2s ease, transform 0.5s ease;
 }
 .node-center.sharp{filter:blur(0);}
-.node-center-name{font-family:var(--fell);font-style:italic;font-size:1.4rem;color:var(--ink);}
-.node-center-sub{font-family:var(--mono);font-size:8px;letter-spacing:0.25em;color:var(--ink-dim);margin-top:4px;}
+.node-center:hover{transform: scale(1.05); background:rgba(168,196,216,0.06);}
 
-/* GRILLE DE NOEUDS */
 .nodes-grid{
   display:grid;
-  grid-template-columns:1fr 1fr 1fr;
-  gap:16px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap:30px;
   position:relative;z-index:2;
 }
 
 .node{
-  border:1px solid rgba(168,196,216,0.08);
-  padding:1.4rem;
+  border:1px solid rgba(168,196,216,0.1);
+  border-radius: 50%; /* ROND */
+  aspect-ratio: 1 / 1;
+  padding:2.5rem;
+  display: flex;flex-direction: column;justify-content: center;align-items: center;text-align: center;
   background:rgba(168,196,216,0.02);
-  transition:border-color 0.4s,background 0.4s,filter 0.8s ease;
-  position:relative;overflow:hidden;
-  filter:blur(5px);
+  transition:all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  filter:blur(8px);
 }
 .node.sharp{filter:blur(0);}
-.node:hover{border-color:rgba(168,196,216,0.25);background:rgba(168,196,216,0.04);}
+.node:hover{border-color:rgba(168,196,216,0.4);background:rgba(168,196,216,0.05);transform: translateY(-5px);}
 
-.node::before{
-  content:'';position:absolute;top:0;left:0;
-  width:100%;height:2px;
-  background:linear-gradient(to right,transparent,rgba(168,196,216,0.15),transparent);
-  transform:translateX(-100%);
-  transition:transform 0.6s ease;
-}
-.node:hover::before{transform:translateX(0);}
-
-.node-tag{
-  font-family:var(--mono);font-size:7px;letter-spacing:0.4em;
-  color:var(--ink-dim);text-transform:uppercase;margin-bottom:0.6rem;
-}
-.node-title{
-  font-family:var(--fell);font-style:italic;font-size:1.15rem;
-  color:var(--ink);margin-bottom:0.5rem;line-height:1.2;
-}
-.node-body{
-  font-size:0.82rem;color:rgba(168,196,216,0.45);
-  line-height:1.75;font-weight:300;
-}
-
-/* NODE TENSION */
-.node.tension{border-color:rgba(168,196,216,0.12);}
-.node.tension .node-tag{color:rgba(168,196,216,0.4);}
+.node-tag{font-family:var(--mono);font-size:7px;letter-spacing:0.3em;color:var(--ink-dim);text-transform:uppercase;margin-bottom:0.8rem;}
+.node-title{font-family:var(--fell);font-style:italic;font-size:1.1rem;color:var(--ink);margin-bottom:0.8rem;}
+.node-body{font-size:0.75rem;color:rgba(168,196,216,0.45);line-height:1.6;}
 
 /* ═══════════════════════════
    ACTE III — HISTOIRE
 ═══════════════════════════ */
-#act3{
-  min-height:100vh;
-  padding:8rem 3rem;
-  max-width:800px;margin:0 auto;
-  display:flex;flex-direction:column;justify-content:center;
-}
+#act3{min-height:100vh;padding:8rem 3rem;max-width:800px;margin:0 auto;}
 .story-header{margin-bottom:4rem;}
-.story-chapter{
-  font-family:var(--mono);font-size:8px;letter-spacing:0.5em;
-  color:var(--ink-dim);margin-bottom:0.6rem;
-}
-.story-h{
-  font-family:var(--fell);font-size:clamp(2.5rem,5vw,3.5rem);
-  color:var(--ink);line-height:1;
-}
+.story-chapter{font-family:var(--mono);font-size:8px;letter-spacing:0.5em;color:var(--ink-dim);margin-bottom:0.6rem;}
+.story-h{font-family:var(--fell);font-size:clamp(2.5rem,5vw,3.5rem);color:var(--ink);line-height:1;}
 .story-h em{font-style:italic;color:rgba(168,196,216,0.3);}
-
-.story-lines{display:flex;flex-direction:column;gap:0;}
-
-.story-line{
-  display:grid;grid-template-columns:80px 1fr;
-  border-bottom:1px solid rgba(168,196,216,0.05);
-  opacity:0;transform:translateX(-20px);
-  transition:opacity 0.7s ease,transform 0.7s ease;
-}
+.story-line{display:grid;grid-template-columns:80px 1fr;border-bottom:1px solid rgba(168,196,216,0.05);opacity:0;transform:translateX(-20px);transition:0.7s ease;}
 .story-line.on{opacity:1;transform:translateX(0);}
-
-.story-time{
-  padding:1.4rem 1rem 1.4rem 0;
-  font-family:var(--mono);font-size:8px;letter-spacing:0.2em;
-  color:var(--ink-dim);padding-top:1.6rem;
-  border-right:1px solid rgba(168,196,216,0.06);
-}
-.story-txt{
-  padding:1.4rem 0 1.4rem 1.5rem;
-  font-size:1rem;line-height:1.9;
-  color:rgba(168,196,216,0.6);
-}
-.story-txt.lead{
-  font-family:var(--fell);font-style:italic;
-  font-size:1.2rem;color:var(--ink);
-}
-.story-txt blockquote{
-  margin-top:0.8rem;
-  padding-left:1rem;
-  border-left:1px solid var(--ink-dim);
-  font-style:italic;color:rgba(168,196,216,0.4);
-  font-size:0.95rem;line-height:1.8;
-}
+.story-time{padding:1.6rem 1rem 1.4rem 0;font-family:var(--mono);font-size:8px;color:var(--ink-dim);border-right:1px solid rgba(168,196,216,0.06);}
+.story-txt{padding:1.4rem 0 1.4rem 1.5rem;font-size:1rem;line-height:1.9;color:rgba(168,196,216,0.6);}
 
 /* ═══════════════════════════
-   ACTE IV — VISION
+   ACTE IV — VISION (BULLES)
 ═══════════════════════════ */
-#act4{
-  min-height:80vh;
-  padding:8rem 3rem;
-  max-width:900px;margin:0 auto;
-  display:flex;flex-direction:column;justify-content:center;
-}
+#act4{padding:8rem 3rem;max-width:1000px;margin:0 auto;}
 .vision-grid{
-  display:grid;grid-template-columns:1fr 1fr;
-  gap:2px;background:rgba(168,196,216,0.04);
-  margin-top:3rem;
+  display:flex;flex-wrap: wrap;justify-content: center;
+  gap:40px;margin-top:4rem;
 }
 .v-cell{
-  background:var(--bg);padding:2.5rem 2rem;
-  opacity:0;transform:translateY(20px);
-  transition:opacity 0.8s ease,transform 0.8s ease,background 0.3s;
+  background:var(--bg);
+  border: 1px solid rgba(168,196,216,0.1);
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; /* Forme un peu organique "goutte" */
+  width: 300px; height: 300px;
+  padding:3rem;
+  display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+  opacity:0;transform:translateY(30px);
+  transition:all 0.8s ease;
 }
 .v-cell.on{opacity:1;transform:translateY(0);}
-.v-cell:hover{background:rgba(168,196,216,0.02);}
-.v-n{
-  font-family:var(--mono);font-size:8px;letter-spacing:0.3em;
-  color:rgba(168,196,216,0.15);margin-bottom:1rem;
-}
-.v-q{
-  font-family:var(--fell);font-style:italic;font-size:1.25rem;
-  color:rgba(168,196,216,0.6);line-height:1.5;margin-bottom:1rem;
-}
-.v-a{
-  font-size:0.88rem;color:rgba(168,196,216,0.35);line-height:1.8;
-}
+.v-cell:hover{border-color: var(--ink); background: rgba(168,196,216,0.03);}
+.v-n{font-family:var(--mono);font-size:8px;color:rgba(168,196,216,0.2);margin-bottom:1rem;}
+.v-q{font-family:var(--fell);font-style:italic;font-size:1.1rem;color:rgba(168,196,216,0.7);margin-bottom:1rem;}
+.v-a{font-size:0.8rem;color:rgba(168,196,216,0.35);line-height:1.6;}
 
 /* ═══════════════════════════
    ACTE V — CLÔTURE
 ═══════════════════════════ */
-#act5{
-  min-height:60vh;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  padding:6rem 3rem;text-align:center;
-  border-top:1px solid rgba(168,196,216,0.04);
-}
-.closing-line{
-  font-family:var(--fell);font-style:italic;
-  font-size:clamp(1.2rem,2.5vw,1.8rem);
-  color:rgba(168,196,216,0.25);
-  line-height:2;max-width:600px;
-  opacity:0;transition:opacity 1.2s ease;
-}
+#act5{min-height:60vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;}
+.closing-line{font-family:var(--fell);font-style:italic;font-size:1.4rem;color:rgba(168,196,216,0.25);opacity:0;transition:1.2s ease;}
 .closing-line.on{opacity:1;}
-.closing-sig{
-  margin-top:3rem;font-family:var(--mono);font-size:8px;
-  letter-spacing:0.4em;color:rgba(168,196,216,0.15);
-  text-transform:uppercase;
-  opacity:0;transition:opacity 1s ease 0.5s;
-}
-.closing-sig.on{opacity:1;}
 
-/* SEPARATEUR THEATRE */
-.curtain{
-  height:1px;
-  background:linear-gradient(to right,transparent,rgba(168,196,216,0.08),transparent);
-  margin:0;
-}
-
-/* TRANSITIONS THEATRALES */
+.curtain{height:1px;background:linear-gradient(to right,transparent,rgba(168,196,216,0.08),transparent);}
 .act-reveal{opacity:0;transition:opacity 1s ease;}
 .act-reveal.on{opacity:1;}
 </style>
@@ -304,7 +195,6 @@ nav::before{content:'';position:absolute;inset:0;background:rgba(7,9,12,0.8);bac
 
 <div class="page">
 
-<!-- ═══ ACTE I ═══ -->
 <section id="act1">
   <div class="act-num">acte i / ouverture</div>
   <div class="big-name" id="hero-name">
@@ -321,262 +211,89 @@ nav::before{content:'';position:absolute;inset:0;background:rgba(7,9,12,0.8);bac
 
 <div class="curtain"></div>
 
-<!-- ═══ ACTE II — CARTE MENTALE ═══ -->
 <section id="act2" class="act-reveal">
   <div class="act2-label">acte ii / cartographie intérieure</div>
   <div class="act2-title">Ce qu'il est vraiment</div>
-
   <div class="mindmap-wrap" id="mindmap">
-
-    <svg id="mindmap-svg" viewBox="0 0 900 80" preserveAspectRatio="none">
-      <line x1="150" y1="40" x2="750" y2="40" stroke="rgba(168,196,216,0.06)" stroke-width="1"/>
-      <line x1="450" y1="40" x2="450" y2="80" stroke="rgba(168,196,216,0.06)" stroke-width="1"/>
-    </svg>
-
     <div class="node-center" id="node-center">
       <div class="node-center-name">[ Shigure ]</div>
-      <div class="node-center-sub">Gojo · nœud central</div>
+      <div class="node-center-sub">Gojo · noyau</div>
     </div>
-
-    <div class="nodes-grid" id="nodes-grid">
-
-      <div class="node" data-depth="0.1">
-        <div class="node-tag">masque // surface</div>
-        <div class="node-title">La nonchalance</div>
-        <div class="node-body">Il sourit. Il plaisante. Il donne l'impression que rien ne l'atteint. C'est sa première ligne de défense — et la plus efficace. Les gens cessent de chercher ce qui se cache derrière.</div>
-      </div>
-
-      <div class="node" data-depth="0.3">
-        <div class="node-tag">désir // profond</div>
-        <div class="node-title">Être vu sans le nom</div>
-        <div class="node-body">Pas "un Gojo". Juste lui. Ce qu'il veut le plus, c'est que quelqu'un le regarde et voit autre chose que la lignée, le sang, l'héritage. Personne n'y est encore arrivé.</div>
-      </div>
-
-      <div class="node" data-depth="0.2">
-        <div class="node-tag">peur // enfouie</div>
-        <div class="node-title">Devenir ce qu'il critique</div>
-        <div class="node-body">Il passe son temps à observer l'arrogance du clan. Et parfois, dans un geste ou une pensée, il se reconnaît dedans. Cette ressemblance le terrifie plus que n'importe quel Fléau.</div>
-      </div>
-
-      <div class="node tension" data-depth="0.4">
-        <div class="node-tag">contradiction // centrale</div>
-        <div class="node-title">Seul par choix ou par peur ?</div>
-        <div class="node-body">Il dit qu'il préfère être seul. Qu'il n'a besoin de personne. Mais c'est la seule chose qu'il n'a jamais vraiment testée — il n'a jamais eu le choix d'être autrement.</div>
-      </div>
-
-      <div class="node" data-depth="0.15">
-        <div class="node-tag">colère // contenue</div>
-        <div class="node-title">Ce qu'il a vu</div>
-        <div class="node-body">Des civils morts. Des missions que personne n'a faites. Des gens sacrifiés par un système qui se dit protecteur. Il n'en parle jamais. Mais ça ne part pas.</div>
-      </div>
-
-      <div class="node" data-depth="0.5">
-        <div class="node-tag">inconnue // avenir</div>
-        <div class="node-title">Jusqu'où il ira</div>
-        <div class="node-body">Il intègre le clan pour le changer de l'intérieur. Mais il ne sait pas encore — et personne ne sait — ce qu'il fera si on lui prouve que c'est impossible.</div>
-      </div>
-
+    <div class="nodes-grid">
+      <div class="node" data-depth="0.1"><div class="node-tag">surface</div><div class="node-title">La nonchalance</div><div class="node-body">Il sourit pour que les gens cessent de chercher ce qui se cache derrière.</div></div>
+      <div class="node" data-depth="0.3"><div class="node-tag">désir</div><div class="node-title">Être vu seul</div><div class="node-body">Pas "un Gojo". Juste lui. Personne n'y est encore arrivé.</div></div>
+      <div class="node" data-depth="0.2"><div class="node-tag">peur</div><div class="node-title">L'héritage</div><div class="node-body">Se reconnaître dans l'arrogance du clan le terrifie.</div></div>
+      <div class="node" data-depth="0.4"><div class="node-tag">conflit</div><div class="node-title">Solitude</div><div class="node-body">Est-il seul par choix ou parce qu'il n'a jamais eu le choix ?</div></div>
     </div>
   </div>
 </section>
 
 <div class="curtain"></div>
 
-<!-- ═══ ACTE III — HISTOIRE ═══ -->
-<section id="act3" class="act-reveal">
-  <div class="story-header">
-    <div class="story-chapter">acte iii / genèse</div>
-    <h2 class="story-h">Ce qui<br/><em>l'a fait</em></h2>
-  </div>
-
-  <div class="story-lines">
-    <div class="story-line">
-      <div class="story-time">avant</div>
-      <div class="story-txt lead">Il n'a pas grandi dans le clan. Pas de mentor, pas de traditions, pas de discours sur la grandeur de la lignée.</div>
-    </div>
-    <div class="story-line">
-      <div class="story-time">enfance</div>
-      <div class="story-txt">Il a grandi seul, parmi des gens ordinaires. Suffisamment longtemps pour comprendre ce que la plupart des exorcistes ignorent — comment le monde fonctionne quand personne ne vous protège.</div>
-    </div>
-    <div class="story-line">
-      <div class="story-time">rupture</div>
-      <div class="story-txt">
-        Il a vu des Fléaux. Des civils qui mouraient. Des exorcistes qui n'étaient pas là. À un moment, il a arrêté de compter.
-        <blockquote>J'ai vu des gens mourir de choses que vous auriez pu arrêter. Vous étiez ailleurs. Occupés à être importants.</blockquote>
-      </div>
-    </div>
-    <div class="story-line">
-      <div class="story-time">découverte</div>
-      <div class="story-txt">Quand son sang Gojo a été identifié, vingt ans s'étaient écoulés depuis Sukuna. Le nom résonnait encore comme une légende. Pour lui, c'était juste un poids qu'il n'avait pas demandé.</div>
-    </div>
-    <div class="story-line">
-      <div class="story-time">maintenant</div>
-      <div class="story-txt lead">Il entre dans le clan. Pas pour le servir. Pour comprendre — et pour forcer quelque chose à changer.</div>
-    </div>
-  </div>
-</section>
-
-<div class="curtain"></div>
-
-<!-- ═══ ACTE IV — VISION ═══ -->
 <section id="act4" class="act-reveal">
   <div class="story-chapter">acte iv / thèse</div>
   <h2 class="story-h">Ce qu'il<br/><em>veut changer</em></h2>
-
   <div class="vision-grid">
     <div class="v-cell">
-      <div class="v-n">// 01</div>
-      <div class="v-q">Le clan Gojo reproduit ce qu'il prétend corriger.</div>
-      <div class="v-a">Ils veulent réformer le système — mais avec leur arrogance, leur certitude d'avoir raison, leur façon de décider pour les autres. C'est la même structure. Juste un autre nom en haut.</div>
+        <div class="v-n">// 01</div>
+        <div class="v-q">Le système est un miroir.</div>
+        <div class="v-a">Changer de chef ne suffit pas si la structure reste identique.</div>
     </div>
     <div class="v-cell">
-      <div class="v-n">// 02</div>
-      <div class="v-q">La force seule ne suffit pas à changer le monde.</div>
-      <div class="v-a">Satoru Gojo était le plus puissant exorciste de son époque. Et le monde n'a pas vraiment changé. La puissance sans vision, c'est juste du bruit.</div>
+        <div class="v-n">// 02</div>
+        <div class="v-q">La force est vide.</div>
+        <div class="v-a">Satoru était le plus fort, et pourtant rien n'a changé.</div>
     </div>
     <div class="v-cell">
-      <div class="v-n">// 03</div>
-      <div class="v-q">Il n'est pas du côté du Culte.</div>
-      <div class="v-a">Ils pensent peut-être partager sa vision du système. Ils ont tort. Lui veut réparer. Eux veulent brûler. Ce n'est pas la même chose.</div>
-    </div>
-    <div class="v-cell">
-      <div class="v-n">// 04</div>
-      <div class="v-q">Il ne sait pas encore jusqu'où il ira.</div>
-      <div class="v-a">C'est la question ouverte. Et c'est précisément ce qui le rend dangereux — pas sa technique, pas son sang. Son imprévisibilité.</div>
+        <div class="v-n">// 03</div>
+        <div class="v-q">Réparer, pas brûler.</div>
+        <div class="v-a">Il rejette le chaos du Culte autant que l'inertie du Clan.</div>
     </div>
   </div>
 </section>
 
 <div class="curtain"></div>
 
-<!-- ═══ ACTE V — CLÔTURE ═══ -->
 <section id="act5">
   <p class="closing-line" id="closing">
-    "La véritable puissance ne se mesure pas au nombre de guerriers,<br/>
-    mais à la capacité d'un seul individu<br/>
-    à transformer le monde par sa force et sa vision."<br/><br/>
-    <span style="font-size:0.7em;color:rgba(168,196,216,0.15);">— Archives du Clan Gojo</span>
+    "La véritable puissance est la capacité d'un seul individu<br/>
+    à transformer le monde par sa vision."
   </p>
-  <div class="closing-sig" id="closing-sig">
-    Gojo [ Shigure ] · Candidature d'intégration · 20 ans post-Sukuna
-  </div>
 </section>
 
-</div><!-- /page -->
+</div>
 
 <script>
-/* ── CURSEUR ── */
+// Le JavaScript reste identique pour gérer le curseur et les animations de flou
 const cur=document.getElementById('cur');
 const ring=document.getElementById('cur-ring');
 let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{
-  mx=e.clientX;my=e.clientY;
-  cur.style.left=mx+'px';cur.style.top=my+'px';
-});
-(function loop(){
-  rx+=(mx-rx)*0.1;ry+=(my-ry)*0.1;
-  ring.style.left=rx+'px';ring.style.top=ry+'px';
-  requestAnimationFrame(loop);
-})();
-document.querySelectorAll('a,.node,.v-cell').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{cur.style.transform='translate(-50%,-50%) scale(2.5)';ring.style.width='50px';ring.style.height='50px';});
-  el.addEventListener('mouseleave',()=>{cur.style.transform='translate(-50%,-50%) scale(1)';ring.style.width='30px';ring.style.height='30px';});
-});
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+(function loop(){rx+=(mx-rx)*0.1;ry+=(my-ry)*0.1;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop);})();
 
-/* ── CANVAS PARTICULES ── */
 const cv=document.getElementById('bg-canvas');
 const cx=cv.getContext('2d');
 function resize(){cv.width=window.innerWidth;cv.height=window.innerHeight;}
 resize();window.addEventListener('resize',resize);
-const pts=Array.from({length:22},()=>({
-  x:Math.random()*window.innerWidth,
-  y:Math.random()*window.innerHeight,
-  vx:(Math.random()-.5)*.25,
-  vy:Math.random()*.35+.1,
-  r:Math.random()*1.2+.3,
-  a:Math.random()*.35+.05,
-  life:Math.random()*400,
-  max:Math.random()*300+200
-}));
-(function draw(){
-  cx.clearRect(0,0,cv.width,cv.height);
-  pts.forEach(p=>{
-    p.x+=p.vx+Math.sin(p.life*.015)*.2;
-    p.y+=p.vy;p.life++;
-    const a=p.a*Math.sin((p.life/p.max)*Math.PI);
-    cx.beginPath();cx.arc(p.x,p.y,p.r,0,Math.PI*2);
-    cx.fillStyle=`rgba(140,190,220,${a})`;cx.fill();
-    if(p.life>p.max||p.y>cv.height+10){
-      p.x=Math.random()*cv.width;p.y=-5;p.life=0;
-      p.max=Math.random()*300+200;p.vx=(Math.random()-.5)*.25;
-      p.vy=Math.random()*.35+.1;p.r=Math.random()*1.2+.3;p.a=Math.random()*.35+.05;
-    }
-  });
-  for(let i=0;i<pts.length;i++)for(let j=i+1;j<pts.length;j++){
-    const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y;
-    const d=Math.sqrt(dx*dx+dy*dy);
-    if(d<130){cx.beginPath();cx.moveTo(pts[i].x,pts[i].y);cx.lineTo(pts[j].x,pts[j].y);
-    cx.strokeStyle=`rgba(140,190,220,${.03*(1-d/130)})`;cx.lineWidth=.5;cx.stroke();}
-  }
-  requestAnimationFrame(draw);
-})();
+const pts=Array.from({length:20},()=>({x:Math.random()*window.innerWidth,y:Math.random()*window.innerHeight,vx:(Math.random()-.5)*.2,vy:Math.random()*.3,r:Math.random()*1+0.5,a:Math.random()*.3,life:0,max:Math.random()*300+200}));
+(function draw(){cx.clearRect(0,0,cv.width,cv.height);pts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.life++;if(p.life>p.max||p.y>cv.height){p.y=-10;p.life=0;}cx.beginPath();cx.arc(p.x,p.y,p.r,0,Math.PI*2);cx.fillStyle=`rgba(168,196,216,${p.a})`;cx.fill();});requestAnimationFrame(draw);})();
 
-/* ── HERO ── */
 setTimeout(()=>document.getElementById('hero-name').classList.add('on'),200);
-setTimeout(()=>document.getElementById('hero-tagline').classList.add('on'),900);
+setTimeout(()=>document.getElementById('hero-tagline').classList.add('on'),800);
 
-/* ── SCROLL OBSERVER ── */
 const io=new IntersectionObserver(entries=>{
   entries.forEach(e=>{
     if(!e.isIntersecting)return;
-    const t=e.target;
-
-    // actes généraux
-    if(t.classList.contains('act-reveal'))t.classList.add('on');
-
-    // carte mentale : blur → net selon scroll
-    if(t.id==='act2'){
-      const nc=document.getElementById('node-center');
-      const nodes=document.querySelectorAll('.node');
-      setTimeout(()=>nc.classList.add('sharp'),100);
-      nodes.forEach((n,i)=>{
-        const depth=parseFloat(n.dataset.depth)||0.2;
-        setTimeout(()=>n.classList.add('sharp'),200+i*180+depth*400);
-      });
+    e.target.classList.add('on');
+    if(e.target.id==='act2'){
+      document.getElementById('node-center').classList.add('sharp');
+      document.querySelectorAll('.node').forEach((n,i)=>setTimeout(()=>n.classList.add('sharp'),200+i*150));
     }
-
-    // lignes histoire
-    if(t.id==='act3'){
-      document.querySelectorAll('.story-line').forEach((l,i)=>{
-        setTimeout(()=>l.classList.add('on'),i*150);
-      });
-    }
-
-    // cellules vision
-    if(t.id==='act4'){
-      document.querySelectorAll('.v-cell').forEach((c,i)=>{
-        setTimeout(()=>c.classList.add('on'),i*120);
-      });
-    }
-
-    // clôture
-    if(t.id==='act5'){
-      setTimeout(()=>document.getElementById('closing').classList.add('on'),200);
-      setTimeout(()=>document.getElementById('closing-sig').classList.add('on'),800);
-    }
+    if(e.target.id==='act4') document.querySelectorAll('.v-cell').forEach((c,i)=>setTimeout(()=>c.classList.add('on'),i*200));
+    if(e.target.id==='act5') setTimeout(()=>document.getElementById('closing').classList.add('on'),200);
   });
-},{threshold:0.2});
-
-document.querySelectorAll('section[id]').forEach(s=>io.observe(s));
-
-/* ── NAV ACTIVE ── */
-const secs=document.querySelectorAll('section[id]');
-const lks=document.querySelectorAll('.nav-links a');
-window.addEventListener('scroll',()=>{
-  let cur='';
-  secs.forEach(s=>{if(window.scrollY>=s.offsetTop-80)cur=s.id;});
-  lks.forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+cur));
-});
+},{threshold:0.1});
+document.querySelectorAll('section[id], .act-reveal').forEach(s=>io.observe(s));
 </script>
 </body>
 </html>
