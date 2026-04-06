@@ -1,33 +1,113 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+
+/* PALETTE "BLEU NUIT" (DEEP SLATE) */
 :root{
-  --ink: #c2dced; --ink-dim: #6b8ca8; --ink-faint: #253648; --bg: #111822;
-  --fell:'IM Fell English',Georgia,serif; --serif:'Cormorant Garamond',Georgia,serif; --mono:'Share Tech Mono',monospace;
+  --ink: #c2dced;       
+  --ink-dim: #6b8ca8;   
+  --ink-faint: #253648; 
+  --bg: #111822;        
+  -- fell:'IM Fell English',Georgia,serif;
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --mono:'Share Tech Mono',monospace;
 }
+
 html{scroll-behavior:smooth;}
 body{background:var(--bg);color:var(--ink);font-family:var(--serif);overflow-x:hidden;cursor:none;line-height:1.7;}
 ::-webkit-scrollbar{width:3px;}
 ::-webkit-scrollbar-track{background:var(--bg);}
 ::-webkit-scrollbar-thumb{background:var(--ink-dim); border-radius: 4px;}
 
-/* CURSEUR & FOND */
+/* CURSEUR & CANVAS (COMMUNS) */
 #cur{position:fixed;width:6px;height:6px;background:var(--ink);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform 0.15s,opacity 0.3s;}
 #cur-ring{position:fixed;width:30px;height:30px;border:1px solid rgba(194,220,237,0.25);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width 0.3s,height 0.3s;}
 #bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0.4;}
 
-/* MENU */
-nav{position:fixed;top:0;left:0;right:0;z-index:200;height:50px;display:flex;align-items:center;justify-content:space-between;padding:0 3rem;border-bottom:1px solid rgba(194,220,237,0.06);}
-nav::before{content:'';position:absolute;inset:0;background:rgba(17,24,34,0.85);backdrop-filter:blur(16px);z-index:-1;}
-.nav-id{font-family:var(--mono);font-size:9px;letter-spacing:0.3em;color:var(--ink-dim);}
-.nav-links{display:flex;gap:2rem;list-style:none;}
-.nav-links a{font-family:var(--mono);font-size:8px;letter-spacing:0.25em;text-transform:uppercase;color:var(--ink-dim);text-decoration:none;transition:color 0.3s;cursor:none;}
-.nav-links a:hover,.nav-links a.on{color:var(--ink);}
+/* NOEUVELLE NAVIGATION VERTICALE À DROITE (RONDE) */
+#right-nav {
+  position: fixed;
+  top: 50%;
+  right: 2rem;
+  transform: translateY(-50%);
+  z-index: 200;
+}
 
-/* STRUCTURE PAGE */
+.nav-dots {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: flex-end; /* Aligne les ronds à droite */
+}
+
+.right-nav-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  justify-content: flex-end; /* Le texte apparaît à gauche du rond */
+  cursor: none; /* Hérite du curseur body */
+}
+
+.nav-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1px solid rgba(194, 220, 237, 0.4);
+  margin-left: 1.5rem; /* Espace entre le texte et le rond */
+  transition: border-color 0.3s, background 0.3s;
+}
+
+/* Texte caché par défaut */
+.nav-label-wrapper {
+  max-width: 0;
+  overflow: hidden;
+  transition: max-width 0.4s ease;
+  display: flex;
+  align-items: center;
+}
+
+.nav-label-text {
+  font-family: var(--mono);
+  font-size: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--ink-dim);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* -- Effet au survol du LIEN (a) -- */
+.right-nav-link:hover .nav-label-wrapper {
+  max-width: 150px; /* Déroule le texte */
+}
+.right-nav-link:hover .nav-label-text {
+  opacity: 1;
+  color: var(--ink);
+}
+.right-nav-link:hover .nav-dot {
+  border-color: var(--ink);
+}
+
+/* -- État Actif (page en cours) -- */
+.right-nav-link.on .nav-label-wrapper {
+  max-width: 150px; /* Texte toujours déroulé */
+}
+.right-nav-link.on .nav-label-text {
+  opacity: 1;
+  color: var(--ink);
+}
+.right-nav-link.on .nav-dot {
+  border-color: var(--ink);
+  background: var(--ink); /* Rond rempli */
+}
+
+/* STRUCTURE COMMUNE DES PAGES */
 .page{position:relative;z-index:1;padding:8rem 3rem;min-height:100vh;display:flex;flex-direction:column;justify-content:center;max-width:1100px;margin:0 auto;}
 .act-num, .story-chapter{font-family:var(--mono);font-size:8px;letter-spacing:0.5em;color:var(--ink-dim);margin-bottom:2rem;opacity:0.6;text-transform:uppercase;text-align:center;}
 .story-h, .act3-title{text-align:center;font-family:var(--fell);font-size:clamp(2.5rem,5vw,3.5rem);color:var(--ink);line-height:1;margin-bottom:4rem;}
 .story-h em, .act3-title em{font-style:italic;color:rgba(194,220,237,0.3);}
 
+/* Styles spécifiques des modules (conservés) */
 /* PAGE 1 : PROFIL */
 .big-name{font-family:var(--fell);font-size:clamp(5rem,12vw,8rem);font-weight:400;line-height:0.85;color:var(--ink);opacity:0;transform:translateY(50px);transition:all 1s ease;text-align:center;}
 .big-name.on{opacity:1;transform:translateY(0);}
@@ -78,6 +158,8 @@ nav::before{content:'';position:absolute;inset:0;background:rgba(17,24,34,0.85);
 .obj-item:last-child{margin-bottom:0;}
 .obj-item-title{font-family:var(--fell);font-style:italic;font-size:1.2rem;color:var(--ink);margin-bottom:0.5rem;}
 .obj-item-txt{font-size:0.85rem;color:rgba(194,220,237,0.6);}
+
+/* Clôture box (uniquement sur la page objectifs) */
 .cloture-box{margin-top:6rem; border-top:1px solid rgba(194,220,237,0.06); padding-top:4rem; text-align:center; opacity:0; transition:opacity 1.2s ease;}
 .cloture-box.on{opacity:1;}
 .closing-line{font-family:var(--fell);font-style:italic;font-size:clamp(1.2rem,2.5vw,1.6rem);color:rgba(194,220,237,0.6);line-height:1.8;max-width:800px;margin:0 auto;}
