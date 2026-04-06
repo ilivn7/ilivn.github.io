@@ -1,194 +1,87 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Gojo — Dossier Psychologique</title>
-  
-  <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
-  
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Gojo — Dossier Psychologique</title>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+<style>
+/* --- TOUT LE DESIGN EST ICI (ROND) --- */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{ --ink:#a8c4d8; --ink-dim:#3a5060; --bg:#07090c; --fell:'IM Fell English',serif; --mono:'Share Tech Mono',monospace; }
+body{background:var(--bg);color:var(--ink);font-family:'Cormorant Garamond',serif;overflow-x:hidden;cursor:none;}
+#cur{position:fixed;width:6px;height:6px;background:var(--ink);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);}
+#cur-ring{position:fixed;width:30px;height:30px;border:1px solid rgba(168,196,216,0.25);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:all 0.3s;}
+#bg-canvas{position:fixed;inset:0;z-index:0;opacity:0.3;}
+nav{position:fixed;top:0;width:100%;z-index:200;display:flex;justify-content:space-between;padding:1.5rem 3rem;background:rgba(7,9,12,0.8);backdrop-filter:blur(10px);border-bottom:1px solid rgba(168,196,216,0.06);}
+.nav-links{display:flex;gap:2rem;list-style:none;}
+.nav-links a{font-family:var(--mono);font-size:9px;text-transform:uppercase;text-decoration:none;color:var(--ink-dim);letter-spacing:2px;}
+.page{position:relative;z-index:1;}
+section{min-height:100vh;padding:8rem 3rem;display:flex;flex-direction:column;justify-content:center;align-items:center;}
+.big-name{font-family:var(--fell);font-size:clamp(4rem,10vw,8rem);text-align:center;opacity:0;transform:translateY(30px);transition:2s;}
+.big-name.on{opacity:1;transform:translateY(0);}
+.node-center{width:180px;height:180px;border:1px solid rgba(168,196,216,0.2);border-radius:50%;display:flex;flex-direction:column;justify-content:center;text-align:center;margin-bottom:3rem;background:rgba(168,196,216,0.03);}
+.nodes-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(250px, 1fr));gap:2rem;width:100%;max-width:1000px;}
+.node{border:1px solid rgba(168,196,216,0.1);border-radius:50%;aspect-ratio:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:2rem;background:rgba(168,196,216,0.02);filter:blur(5px);transition:0.8s;}
+.node.sharp{filter:blur(0);}
+.vision-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:2rem;}
+.v-cell{width:280px;height:280px;border:1px solid rgba(168,196,216,0.1);border-radius:40% 60% 70% 30% / 50% 40% 60% 50%;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:2rem;opacity:0;transition:1s;}
+.v-cell.on{opacity:1;}
+.curtain{height:1px;background:linear-gradient(to right,transparent,rgba(168,196,216,0.1),transparent);width:80%;margin:0 auto;}
+</style>
 </head>
 <body>
-
 <canvas id="bg-canvas"></canvas>
 <div id="cur"></div>
 <div id="cur-ring"></div>
-
 <nav>
-  <div class="nav-id">_dossier.psychologique / gojo</div>
-  <ul class="nav-links">
-    <li><a href="#act1">ouverture</a></li>
-    <li><a href="#act2">psyché</a></li>
-    <li><a href="#act3">origine</a></li>
-    <li><a href="#act4">vision</a></li>
-  </ul>
+    <div style="font-family:var(--mono); font-size:10px;">_DOSSIER.GOJO</div>
+    <ul class="nav-links">
+        <li><a href="#act1">Ouverture</a></li>
+        <li><a href="#act2">Psyché</a></li>
+        <li><a href="#act4">Vision</a></li>
+    </ul>
 </nav>
-
 <div class="page">
-
-<section id="act1">
-  <div class="act-num">acte i / ouverture</div>
-  <div class="big-name" id="hero-name">
-    <em>Gojo</em>
-    [ Shigure ]
-  </div>
-  <p class="tagline" id="hero-tagline">
-    Vingt ans après la chute du Roi des Fléaux.<br/>
-    Un nom qui résonne encore.<br/>
-    Un gamin qui n'a jamais demandé à le porter.
-  </p>
-  <div class="scroll-word">descendre</div>
-</section>
-
-<div class="curtain"></div>
-
-<section id="act2" class="act-reveal">
-  <div class="act2-label">acte ii / cartographie intérieure</div>
-  <div class="act2-title">Ce qu'il est vraiment</div>
-
-  <div class="mindmap-wrap" id="mindmap">
-    <div class="node-center" id="node-center">
-      <div class="node-center-name">[ Shigure ]</div>
-      <div class="node-center-sub">Gojo · noyau central</div>
-    </div>
-
-    <div class="nodes-grid" id="nodes-grid">
-      <div class="node" data-depth="0.1">
-        <div class="node-tag">surface</div>
-        <div class="node-title">La nonchalance</div>
-        <div class="node-body">Il sourit. Il plaisante. Il donne l'impression que rien ne l'atteint. C'est sa première ligne de défense.</div>
-      </div>
-
-      <div class="node" data-depth="0.3">
-        <div class="node-tag">profond</div>
-        <div class="node-title">Être vu seul</div>
-        <div class="node-body">Pas "un Gojo". Juste lui. Ce qu'il veut, c'est qu'on voit autre chose que son sang.</div>
-      </div>
-
-      <div class="node" data-depth="0.2">
-        <div class="node-tag">peur</div>
-        <div class="node-title">Devenir le Clan</div>
-        <div class="node-body">Se reconnaître dans l'arrogance de ses ancêtres le terrifie plus que les Fléaux.</div>
-      </div>
-
-      <div class="node tension" data-depth="0.4">
-        <div class="node-tag">conflit</div>
-        <div class="node-title">Solitude</div>
-        <div class="node-body">Est-il seul par choix ou parce qu'il n'a jamais eu le droit d'être autrement ?</div>
-      </div>
-      
-      <div class="node" data-depth="0.15">
-        <div class="node-tag">colère</div>
-        <div class="node-title">Ce qu'il a vu</div>
-        <div class="node-body">Des civils sacrifiés par un système qui se dit protecteur. Il n'oublie rien.</div>
-      </div>
-
-      <div class="node" data-depth="0.5">
-        <div class="node-tag">avenir</div>
-        <div class="node-title">L'imprévisible</div>
-        <div class="node-body">Il entre dans le clan pour le changer. Personne ne sait s'il y parviendra.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="curtain"></div>
-
-<section id="act3" class="act-reveal">
-  <div class="story-header">
-    <div class="story-chapter">acte iii / genèse</div>
-    <h2 class="story-h">Ce qui<br/><em>l'a fait</em></h2>
-  </div>
-
-  <div class="story-lines">
-    <div class="story-line">
-      <div class="story-time">avant</div>
-      <div class="story-txt lead">Il n'a pas grandi dans le clan. Pas de mentor, pas de traditions.</div>
-    </div>
-    <div class="story-line">
-      <div class="story-time">enfance</div>
-      <div class="story-txt">Il a grandi seul, comprenant comment le monde fonctionne sans protection.</div>
-    </div>
-    <div class="story-line">
-      <div class="story-time">rupture</div>
-      <div class="story-txt">
-        "J'ai vu des gens mourir de choses que vous auriez pu arrêter."
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="curtain"></div>
-
-<section id="act4" class="act-reveal">
-  <div class="story-chapter">acte iv / thèse</div>
-  <h2 class="story-h">Ce qu'il<br/><em>veut changer</em></h2>
-
-  <div class="vision-grid">
-    <div class="v-cell">
-      <div class="v-n">// 01</div>
-      <div class="v-q">Le système est un miroir.</div>
-      <div class="v-a">Changer le nom au sommet ne sert à rien si l'arrogance reste la même.</div>
-    </div>
-    <div class="v-cell">
-      <div class="v-n">// 02</div>
-      <div class="v-q">La force est vide.</div>
-      <div class="v-a">Satoru était le plus fort, et pourtant le monde n'a pas bougé. La puissance sans vision est inutile.</div>
-    </div>
-  </div>
-</section>
-
-<div class="curtain"></div>
-
-<section id="act5">
-  <p class="closing-line" id="closing">
-    "La véritable puissance est la capacité d'un seul individu<br/>
-    à transformer le monde par sa vision."
-  </p>
-  <div class="closing-sig" id="closing-sig">
-    Gojo [ Shigure ] · 20 ans post-Sukuna
-  </div>
-</section>
-
+    <section id="act1">
+        <div class="big-name" id="hero-name"><em>Gojo</em><br>[ Shigure ]</div>
+    </section>
+    <div class="curtain"></div>
+    <section id="act2">
+        <div class="node-center" id="node-center"><strong>[ Shigure ]</strong><br><small>Noyau</small></div>
+        <div class="nodes-grid">
+            <div class="node"><div class="node-title">La nonchalance</div><div style="font-size:0.8rem; opacity:0.6;">Un masque de protection.</div></div>
+            <div class="node"><div class="node-title">Être vu seul</div><div style="font-size:0.8rem; opacity:0.6;">Exister sans le nom.</div></div>
+            <div class="node"><div class="node-title">L'héritage</div><div style="font-size:0.8rem; opacity:0.6;">La peur de ressembler au clan.</div></div>
+        </div>
+    </section>
+    <div class="curtain"></div>
+    <section id="act4">
+        <div class="vision-grid">
+            <div class="v-cell"><strong>Vision 01</strong><br><p style="font-size:0.8rem; opacity:0.6;">Réparer le système, pas seulement le diriger.</p></div>
+            <div class="v-cell"><strong>Vision 02</strong><br><p style="font-size:0.8rem; opacity:0.6;">La force sans but est un gâchis.</p></div>
+        </div>
+    </section>
 </div>
-
 <script>
-/* ── LE JAVASCRIPT RESTE DANS LE HTML POUR L'INTERACTIVITÉ ── */
-const cur=document.getElementById('cur');
-const ring=document.getElementById('cur-ring');
+const cur=document.getElementById('cur'); const ring=document.getElementById('cur-ring');
 let mx=0,my=0,rx=0,ry=0;
 document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
 (function loop(){rx+=(mx-rx)*0.1;ry+=(my-ry)*0.1;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop);})();
-
-const cv=document.getElementById('bg-canvas');
-const cx=cv.getContext('2d');
-function resize(){cv.width=window.innerWidth;cv.height=window.innerHeight;}
-resize();window.addEventListener('resize',resize);
-const pts=Array.from({length:22},()=>({x:Math.random()*window.innerWidth,y:Math.random()*window.innerHeight,vx:(Math.random()-.5)*.25,vy:Math.random()*.35+.1,r:Math.random()*1.2+.3,a:Math.random()*.35+.05,life:Math.random()*400,max:Math.random()*300+200}));
-(function draw(){cx.clearRect(0,0,cv.width,cv.height);pts.forEach(p=>{p.x+=p.vx+Math.sin(p.life*.015)*.2;p.y+=p.vy;p.life++;const a=p.a*Math.sin((p.life/p.max)*Math.PI);cx.beginPath();cx.arc(p.x,p.y,p.r,0,Math.PI*2);cx.fillStyle=`rgba(140,190,220,${a})`;cx.fill();if(p.life>p.max||p.y>cv.height+10){p.x=Math.random()*cv.width;p.y=-5;p.life=0;}});requestAnimationFrame(draw);})();
-
-setTimeout(()=>document.getElementById('hero-name').classList.add('on'),200);
-setTimeout(()=>document.getElementById('hero-tagline').classList.add('on'),900);
-
+setTimeout(()=>document.getElementById('hero-name').classList.add('on'),500);
 const io=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(!e.isIntersecting)return;
-    const t=e.target;
-    if(t.classList.contains('act-reveal'))t.classList.add('on');
-    if(t.id==='act2'){
-      document.getElementById('node-center').classList.add('sharp');
-      document.querySelectorAll('.node').forEach((n,i)=>setTimeout(()=>n.classList.add('sharp'),200+i*180));
-    }
-    if(t.id==='act3') document.querySelectorAll('.story-line').forEach((l,i)=>setTimeout(()=>l.classList.add('on'),i*150));
-    if(t.id==='act4') document.querySelectorAll('.v-cell').forEach((c,i)=>setTimeout(()=>c.classList.add('on'),i*120));
-    if(t.id==='act5'){
-      setTimeout(()=>document.getElementById('closing').classList.add('on'),200);
-      setTimeout(()=>document.getElementById('closing-sig').classList.add('on'),800);
-    }
-  });
+    entries.forEach(e=>{
+        if(e.isIntersecting){
+            if(e.target.id==='act2'){
+                document.querySelectorAll('.node').forEach((n,i)=>setTimeout(()=>n.classList.add('sharp'),i*200));
+            }
+            if(e.target.id==='act4'){
+                document.querySelectorAll('.v-cell').forEach((c,i)=>setTimeout(()=>c.classList.add('on'),i*200));
+            }
+        }
+    });
 },{threshold:0.2});
-document.querySelectorAll('section[id]').forEach(s=>io.observe(s));
+document.querySelectorAll('section').forEach(s=>io.observe(s));
 </script>
 </body>
 </html>
