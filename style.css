@@ -172,3 +172,13 @@ body{background:var(--bg);color:var(--ink);font-family:var(--serif);overflow-x:h
 .cloture-box.on{opacity:1;}
 .closing-line{font-family:var(--fell);font-style:italic;font-size:clamp(1.2rem,2.5vw,1.6rem);color:rgba(194,220,237,0.6);line-height:1.8;max-width:800px;margin:0 auto;}
 .closing-sig{margin-top:3rem;font-family:var(--mono);font-size:8px;letter-spacing:0.4em;color:var(--cyan);text-transform:uppercase;opacity:0.8;}
+
+/* Centre le dernier rond de la psychologie (L'inconnue) sur ordinateur */
+@media (min-width: 900px) {
+  .nodes-grid {
+    grid-template-columns: 1fr 1fr 1fr; /* Force l'affichage parfait en 3 colonnes */
+  }
+  .nodes-grid .node:last-child {
+    grid-column: 2; /* Pousse le dernier rond dans la 2ème colonne (pile au centre) */
+  }
+}
