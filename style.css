@@ -1,5 +1,4 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-
 :root{
   --ink:#a8c4d8;
   --ink-dim:#3a5060;
@@ -9,11 +8,8 @@
   --serif:'Cormorant Garamond',Georgia,serif;
   --mono:'Share Tech Mono',monospace;
 }
-
 html{scroll-behavior:smooth;}
 body{background:var(--bg);color:var(--ink);font-family:var(--serif);overflow-x:hidden;cursor:none;}
-
-/* SCROLLBAR */
 ::-webkit-scrollbar{width:2px;}
 ::-webkit-scrollbar-track{background:var(--bg);}
 ::-webkit-scrollbar-thumb{background:var(--ink-dim);}
@@ -35,7 +31,7 @@ nav::before{content:'';position:absolute;inset:0;background:rgba(7,9,12,0.8);bac
 
 .page{position:relative;z-index:1;}
 
-/* ACTE I — OUVERTURE */
+/* ACTE I */
 #act1{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:7rem 3rem 4rem;max-width:1000px;margin:0 auto;}
 .act-num{font-family:var(--mono);font-size:8px;letter-spacing:0.5em;color:var(--ink-dim);margin-bottom:4rem;opacity:0.5;}
 .big-name{font-family:var(--fell);font-size:clamp(5rem,14vw,10rem);font-weight:400;line-height:0.85;color:var(--ink);opacity:0;transform:translateY(50px);transition:opacity 1.4s cubic-bezier(.16,1,.3,1),transform 1.4s cubic-bezier(.16,1,.3,1);}
@@ -47,57 +43,90 @@ nav::before{content:'';position:absolute;inset:0;background:rgba(7,9,12,0.8);bac
 .scroll-word::after{content:'';width:40px;height:1px;background:linear-gradient(to right,var(--ink-dim),transparent);}
 @keyframes drift{0%,100%{transform:translateX(0);}50%{transform:translateX(6px);}}
 
-/* ACTE II — CARTE MENTALE (ROND) */
-#act2{min-height:100vh;padding:6rem 3rem;}
+/* ACTE II — CARTE MENTALE */
+#act2{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:6rem 3rem;position:relative;}
 .act2-label{text-align:center;font-family:var(--mono);font-size:8px;letter-spacing:0.5em;color:var(--ink-dim);margin-bottom:1rem;text-transform:uppercase;}
 .act2-title{text-align:center;font-family:var(--fell);font-style:italic;font-size:clamp(1.8rem,3vw,2.5rem);color:var(--ink);margin-bottom:4rem;opacity:0.6;}
-.mindmap-wrap{position:relative;width:100%;max-width:1100px;margin:0 auto;}
+.mindmap-wrap{position:relative;width:100%;max-width:900px;margin:0 auto;}
+#mindmap-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;}
 
 .node-center{
   position:relative;z-index:2;
-  width:180px;height:180px;margin:0 auto 4rem;
+  width:160px;height:160px;margin:0 auto 3rem;
   display:flex;flex-direction:column;justify-content:center;align-items:center;
   text-align:center;border:1px solid rgba(168,196,216,0.2);
-  border-radius: 50%;background:rgba(168,196,216,0.03);
-  filter:blur(10px);transition:filter 1.2s ease, transform 0.5s ease;
+  border-radius: 50%; /* ROND */
+  background:rgba(168,196,216,0.03);
+  filter:blur(6px);transition:filter 0.8s ease;
 }
 .node-center.sharp{filter:blur(0);}
-.node-center:hover{transform: scale(1.05); background:rgba(168,196,216,0.06);}
+.node-center-name{font-family:var(--fell);font-style:italic;font-size:1.4rem;color:var(--ink);}
+.node-center-sub{font-family:var(--mono);font-size:8px;letter-spacing:0.25em;color:var(--ink-dim);margin-top:4px;}
 
-.nodes-grid{display:grid;grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));gap:30px;position:relative;z-index:2;}
+.nodes-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr; /* TA GRILLE ORIGINALE */
+  gap:20px;
+  position:relative;z-index:2;
+}
 
 .node{
-  border:1px solid rgba(168,196,216,0.1);
-  border-radius: 50%; aspect-ratio: 1 / 1; padding:2.5rem;
-  display: flex;flex-direction: column;justify-content: center;align-items: center;text-align: center;
-  background:rgba(168,196,216,0.02);transition:all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-  filter:blur(8px);
+  border:1px solid rgba(168,196,216,0.08);
+  border-radius: 50%; /* ROND */
+  aspect-ratio: 1 / 1;
+  padding:1.5rem;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
+  background:rgba(168,196,216,0.02);
+  transition:border-color 0.4s,background 0.4s,filter 0.8s ease,transform 0.4s;
+  position:relative;overflow:hidden;filter:blur(5px);
 }
 .node.sharp{filter:blur(0);}
-.node:hover{border-color:rgba(168,196,216,0.4);background:rgba(168,196,216,0.05);transform: translateY(-5px);}
+.node:hover{border-color:rgba(168,196,216,0.25);background:rgba(168,196,216,0.04);transform: scale(1.05);}
+.node-tag{font-family:var(--mono);font-size:7px;letter-spacing:0.4em;color:var(--ink-dim);text-transform:uppercase;margin-bottom:0.6rem;}
+.node-title{font-family:var(--fell);font-style:italic;font-size:1.15rem;color:var(--ink);margin-bottom:0.5rem;line-height:1.2;}
+.node-body{font-size:0.82rem;color:rgba(168,196,216,0.45);line-height:1.6;font-weight:300;}
+.node.tension{border-color:rgba(168,196,216,0.12);}
+.node.tension .node-tag{color:rgba(168,196,216,0.4);}
 
-.node-tag{font-family:var(--mono);font-size:7px;letter-spacing:0.3em;color:var(--ink-dim);text-transform:uppercase;margin-bottom:0.8rem;}
-.node-title{font-family:var(--fell);font-style:italic;font-size:1.1rem;color:var(--ink);margin-bottom:0.8rem;}
-.node-body{font-size:0.75rem;color:rgba(168,196,216,0.45);line-height:1.6;}
+/* ACTE III — HISTOIRE */
+#act3{min-height:100vh;padding:8rem 3rem;max-width:800px;margin:0 auto;display:flex;flex-direction:column;justify-content:center;}
+.story-header{margin-bottom:4rem;}
+.story-chapter{font-family:var(--mono);font-size:8px;letter-spacing:0.5em;color:var(--ink-dim);margin-bottom:0.6rem;}
+.story-h{font-family:var(--fell);font-size:clamp(2.5rem,5vw,3.5rem);color:var(--ink);line-height:1;}
+.story-h em{font-style:italic;color:rgba(168,196,216,0.3);}
+.story-lines{display:flex;flex-direction:column;gap:0;}
+.story-line{display:grid;grid-template-columns:80px 1fr;border-bottom:1px solid rgba(168,196,216,0.05);opacity:0;transform:translateX(-20px);transition:opacity 0.7s ease,transform 0.7s ease;}
+.story-line.on{opacity:1;transform:translateX(0);}
+.story-time{padding:1.4rem 1rem 1.4rem 0;font-family:var(--mono);font-size:8px;letter-spacing:0.2em;color:var(--ink-dim);padding-top:1.6rem;border-right:1px solid rgba(168,196,216,0.06);}
+.story-txt{padding:1.4rem 0 1.4rem 1.5rem;font-size:1rem;line-height:1.9;color:rgba(168,196,216,0.6);}
+.story-txt.lead{font-family:var(--fell);font-style:italic;font-size:1.2rem;color:var(--ink);}
+.story-txt blockquote{margin-top:0.8rem;padding-left:1rem;border-left:1px solid var(--ink-dim);font-style:italic;color:rgba(168,196,216,0.4);font-size:0.95rem;line-height:1.8;}
 
-/* ACTE IV — VISION (BULLES) */
-.vision-grid{display:flex;flex-wrap: wrap;justify-content: center;gap:40px;margin-top:4rem;}
+/* ACTE IV — VISION */
+#act4{min-height:80vh;padding:8rem 3rem;max-width:900px;margin:0 auto;display:flex;flex-direction:column;justify-content:center;}
+.vision-grid{
+  display:grid;grid-template-columns:1fr 1fr; /* TA GRILLE ORIGINALE */
+  gap:20px;margin-top:3rem;
+}
 .v-cell{
-  background:var(--bg);border: 1px solid rgba(168,196,216,0.1);
-  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-  width: 300px; height: 300px; padding:3rem;
-  display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
-  opacity:0;transform:translateY(30px);transition:all 0.8s ease;
+  background:var(--bg);border: 1px solid rgba(168,196,216,0.08);
+  border-radius: 40% 60% 70% 30% / 50% 40% 60% 50%; /* ELLIPSE */
+  padding:3.5rem 2rem;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
+  opacity:0;transform:translateY(20px);transition:opacity 0.8s ease,transform 0.8s ease,background 0.3s;
 }
 .v-cell.on{opacity:1;transform:translateY(0);}
-.v-cell:hover{border-color: var(--ink); background: rgba(168,196,216,0.03);}
-.v-n{font-family:var(--mono);font-size:8px;color:rgba(168,196,216,0.2);margin-bottom:1rem;}
-.v-q{font-family:var(--fell);font-style:italic;font-size:1.1rem;color:rgba(168,196,216,0.7);margin-bottom:1rem;}
-.v-a{font-size:0.8rem;color:rgba(168,196,216,0.35);line-height:1.6;}
+.v-cell:hover{background:rgba(168,196,216,0.02);border-color:rgba(168,196,216,0.3);}
+.v-n{font-family:var(--mono);font-size:8px;letter-spacing:0.3em;color:rgba(168,196,216,0.15);margin-bottom:1rem;}
+.v-q{font-family:var(--fell);font-style:italic;font-size:1.25rem;color:rgba(168,196,216,0.6);line-height:1.5;margin-bottom:1rem;}
+.v-a{font-size:0.88rem;color:rgba(168,196,216,0.35);line-height:1.8;}
 
-/* CLÔTURE ET SEPARATEURS */
-.curtain{height:1px;background:linear-gradient(to right,transparent,rgba(168,196,216,0.08),transparent);}
+/* ACTE V — CLÔTURE */
+#act5{min-height:60vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6rem 3rem;text-align:center;border-top:1px solid rgba(168,196,216,0.04);}
+.closing-line{font-family:var(--fell);font-style:italic;font-size:clamp(1.2rem,2.5vw,1.8rem);color:rgba(168,196,216,0.25);line-height:2;max-width:600px;opacity:0;transition:opacity 1.2s ease;}
+.closing-line.on{opacity:1;}
+.closing-sig{margin-top:3rem;font-family:var(--mono);font-size:8px;letter-spacing:0.4em;color:rgba(168,196,216,0.15);text-transform:uppercase;opacity:0;transition:opacity 1s ease 0.5s;}
+.closing-sig.on{opacity:1;}
+
+.curtain{height:1px;background:linear-gradient(to right,transparent,rgba(168,196,216,0.08),transparent);margin:0;}
 .act-reveal{opacity:0;transition:opacity 1s ease;}
 .act-reveal.on{opacity:1;}
-.closing-line{font-family:var(--fell);font-style:italic;font-size:1.4rem;color:rgba(168,196,216,0.25);opacity:0;transition:1.2s ease;}
-.closing-line.on{opacity:1;}
