@@ -10,10 +10,10 @@
 
 /* PALETTE "BLEU NUIT" (DEEP SLATE) */
 :root{
-  --ink: #c2dced;       /* Texte clair bleu glacé */
-  --ink-dim: #6b8ca8;   /* Texte secondaire bleu moyen */
-  --ink-faint: #253648; /* Bordures fines */
-  --bg: #111822;        /* Fond Bleu nuit profond */
+  --ink: #c2dced;       
+  --ink-dim: #6b8ca8;   
+  --ink-faint: #253648; 
+  --bg: #111822;        
   
   --fell:'IM Fell English',Georgia,serif;
   --serif:'Cormorant Garamond',Georgia,serif;
@@ -21,7 +21,7 @@
 }
 
 html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--ink);font-family:var(--serif);overflow-x:hidden;cursor:none;line-height:1.6;}
+body{background:var(--bg);color:var(--ink);font-family:var(--serif);overflow-x:hidden;cursor:none;line-height:1.7;}
 ::-webkit-scrollbar{width:3px;}
 ::-webkit-scrollbar-track{background:var(--bg);}
 ::-webkit-scrollbar-thumb{background:var(--ink-dim); border-radius: 4px;}
@@ -29,8 +29,6 @@ body{background:var(--bg);color:var(--ink);font-family:var(--serif);overflow-x:h
 /* CURSEUR */
 #cur{position:fixed;width:6px;height:6px;background:var(--ink);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform 0.15s,opacity 0.3s;}
 #cur-ring{position:fixed;width:30px;height:30px;border:1px solid rgba(194,220,237,0.25);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width 0.3s,height 0.3s;}
-
-/* CANVAS */
 #bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0.4;}
 
 /* NAV */
@@ -43,85 +41,72 @@ nav::before{content:'';position:absolute;inset:0;background:rgba(17,24,34,0.85);
 
 .page{position:relative;z-index:1;}
 
-/* ACTE I — OUVERTURE */
-#act1{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:7rem 3rem 4rem;max-width:1000px;margin:0 auto;}
-.act-num{font-family:var(--mono);font-size:8px;letter-spacing:0.5em;color:var(--ink-dim);margin-bottom:4rem;opacity:0.6;}
-.big-name{font-family:var(--fell);font-size:clamp(5rem,14vw,10rem);font-weight:400;line-height:0.85;color:var(--ink);opacity:0;transform:translateY(50px);transition:opacity 1.4s cubic-bezier(.16,1,.3,1),transform 1.4s cubic-bezier(.16,1,.3,1);}
+/* ACTE I — PRÉSENTATION & PERSONNALITÉ */
+#act1{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:7rem 3rem 4rem;max-width:900px;margin:0 auto;}
+.act-num{font-family:var(--mono);font-size:8px;letter-spacing:0.5em;color:var(--ink-dim);margin-bottom:2rem;opacity:0.6;}
+.big-name{font-family:var(--fell);font-size:clamp(5rem,12vw,8rem);font-weight:400;line-height:0.85;color:var(--ink);opacity:0;transform:translateY(50px);transition:all 1.4s cubic-bezier(.16,1,.3,1);}
 .big-name.on{opacity:1;transform:translateY(0);}
 .big-name em{font-style:italic;color:rgba(194,220,237,0.3);font-size:0.45em;display:block;margin-bottom:0.2em;letter-spacing:0.1em;}
-.tagline{margin-top:3rem;max-width:600px;font-family:var(--serif);font-size:1.15rem;color:rgba(194,220,237,0.7);line-height:1.8;opacity:0;transition:opacity 1s ease 0.8s;}
-.tagline.on{opacity:1;}
-.scroll-word{position:absolute;bottom:2.5rem;left:3rem;font-family:var(--mono);font-size:8px;letter-spacing:0.4em;color:var(--ink-dim);text-transform:uppercase;display:flex;align-items:center;gap:1rem;animation:drift 2.5s ease-in-out infinite;}
-.scroll-word::after{content:'';width:40px;height:1px;background:linear-gradient(to right,var(--ink-dim),transparent);}
-@keyframes drift{0%,100%{transform:translateX(0);}50%{transform:translateX(6px);}}
 
-/* ACTE II — CARTE MENTALE (ROND) */
-#act2{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:6rem 3rem;position:relative;}
-.act2-label{text-align:center;font-family:var(--mono);font-size:8px;letter-spacing:0.5em;color:var(--ink-dim);margin-bottom:1rem;text-transform:uppercase;}
-.act2-title{text-align:center;font-family:var(--fell);font-style:italic;font-size:clamp(1.8rem,3vw,2.5rem);color:var(--ink);margin-bottom:4rem;opacity:0.8;}
-.mindmap-wrap{position:relative;width:100%;max-width:1000px;margin:0 auto;}
-#mindmap-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;}
+.intro-text{margin-top:4rem; opacity:0; transition:opacity 1s ease 0.8s;}
+.intro-text.on{opacity:1;}
+.intro-p{font-size:1.1rem; color:rgba(194,220,237,0.7); margin-bottom:1.5rem; text-align:justify;}
+.intro-h{font-family:var(--fell);font-style:italic;font-size:1.5rem;color:var(--ink);margin:2rem 0 1rem; border-bottom:1px solid rgba(194,220,237,0.1); padding-bottom:0.5rem;}
 
-.node-center{
-  position:relative;z-index:2;
-  width:160px;height:160px;margin:0 auto 3rem;
-  display:flex;flex-direction:column;justify-content:center;align-items:center;
-  text-align:center;border:1px solid rgba(194,220,237,0.15);
-  border-radius: 50%;
-  background:rgba(194,220,237,0.03); 
-  filter:blur(6px);transition:filter 0.8s ease;
-}
-.node-center.sharp{filter:blur(0);}
-.node-center-name{font-family:var(--fell);font-style:italic;font-size:1.4rem;color:var(--ink);}
-.node-center-sub{font-family:var(--mono);font-size:8px;letter-spacing:0.25em;color:var(--ink-dim);margin-top:4px;}
-
-.nodes-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:30px;position:relative;z-index:2;}
-
-.node{
-  border:1px solid rgba(194,220,237,0.08);
-  border-radius: 50%;
-  aspect-ratio: 1 / 1;
-  padding:2.5rem;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
-  background:rgba(194,220,237,0.02); 
-  transition:all 0.4s ease;
-  position:relative;overflow:hidden;filter:blur(5px);
-}
-.node.sharp{filter:blur(0);}
-.node:hover{border-color:rgba(194,220,237,0.25);background:rgba(194,220,237,0.04);transform: scale(1.05);}
-.node-tag{font-family:var(--mono);font-size:7px;letter-spacing:0.4em;color:var(--ink-dim);text-transform:uppercase;margin-bottom:0.6rem;}
-.node-title{font-family:var(--fell);font-style:italic;font-size:1.15rem;color:var(--ink);margin-bottom:0.8rem;line-height:1.2;}
-.node-body{font-size:0.85rem;color:rgba(194,220,237,0.6);line-height:1.6;font-weight:300;}
-
-/* ACTE III — HISTOIRE */
-#act3{min-height:100vh;padding:8rem 3rem;max-width:850px;margin:0 auto;display:flex;flex-direction:column;justify-content:center;}
+/* ACTE II — HISTOIRE (TIMELINE) */
+#act2{min-height:100vh;padding:8rem 3rem;max-width:900px;margin:0 auto;display:flex;flex-direction:column;justify-content:center;}
 .story-header{margin-bottom:4rem;}
 .story-chapter{font-family:var(--mono);font-size:8px;letter-spacing:0.5em;color:var(--ink-dim);margin-bottom:0.6rem;}
 .story-h{font-family:var(--fell);font-size:clamp(2.5rem,5vw,3.5rem);color:var(--ink);line-height:1;}
 .story-h em{font-style:italic;color:rgba(194,220,237,0.3);}
 .story-lines{display:flex;flex-direction:column;gap:0;}
-.story-line{display:grid;grid-template-columns:100px 1fr;border-bottom:1px solid rgba(194,220,237,0.05);opacity:0;transform:translateX(-20px);transition:opacity 0.7s ease,transform 0.7s ease;}
+.story-line{display:grid;grid-template-columns:120px 1fr;border-bottom:1px solid rgba(194,220,237,0.05);opacity:0;transform:translateX(-20px);transition:opacity 0.7s ease,transform 0.7s ease;}
 .story-line.on{opacity:1;transform:translateX(0);}
-.story-time{padding:1.4rem 1rem 1.4rem 0;font-family:var(--mono);font-size:8px;letter-spacing:0.2em;color:var(--ink-dim);padding-top:1.6rem;border-right:1px solid rgba(194,220,237,0.05);}
-.story-txt{padding:1.4rem 0 1.4rem 2rem;font-size:1rem;line-height:1.9;color:rgba(194,220,237,0.7);}
+.story-time{padding:1.8rem 1rem 1.8rem 0;font-family:var(--mono);font-size:9px;letter-spacing:0.2em;color:var(--ink-dim);border-right:1px solid rgba(194,220,237,0.1);}
+.story-txt{padding:1.8rem 0 1.8rem 2rem;font-size:1rem;color:rgba(194,220,237,0.7);}
 .story-txt.lead{font-family:var(--fell);font-style:italic;font-size:1.2rem;color:var(--ink);}
 
-/* ACTE IV — VISION / ROLES (ELLIPSE) */
+/* ACTE III — PSYCHOLOGIE (CARTE MENTALE 7 NOEUDS) */
+#act3{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:8rem 3rem;position:relative;}
+.act3-title{text-align:center;font-family:var(--fell);font-style:italic;font-size:clamp(1.8rem,3vw,2.5rem);color:var(--ink);margin-bottom:4rem;opacity:0.8;}
+.mindmap-wrap{position:relative;width:100%;max-width:1100px;margin:0 auto;}
+.node-center{position:relative;z-index:2;width:160px;height:160px;margin:0 auto 3rem;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;border:1px solid rgba(194,220,237,0.15);border-radius:50%;background:rgba(194,220,237,0.03); filter:blur(6px);transition:filter 0.8s ease;}
+.node-center.sharp{filter:blur(0);}
+.node-center-name{font-family:var(--fell);font-style:italic;font-size:1.4rem;color:var(--ink);}
+.node-center-sub{font-family:var(--mono);font-size:8px;letter-spacing:0.25em;color:var(--ink-dim);margin-top:4px;}
+
+.nodes-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:20px;position:relative;z-index:2;}
+.node{border:1px solid rgba(194,220,237,0.08);border-radius:50%;aspect-ratio:1/1;padding:2.5rem;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;background:rgba(194,220,237,0.02);transition:all 0.4s ease;position:relative;overflow:hidden;filter:blur(5px);}
+.node.sharp{filter:blur(0);}
+.node:hover{border-color:rgba(194,220,237,0.25);background:rgba(194,220,237,0.04);transform:scale(1.05);}
+.node-tag{font-family:var(--mono);font-size:7px;letter-spacing:0.4em;color:var(--ink-dim);text-transform:uppercase;margin-bottom:0.6rem;}
+.node-title{font-family:var(--fell);font-style:italic;font-size:1.15rem;color:var(--ink);margin-bottom:0.8rem;line-height:1.2;}
+.node-body{font-size:0.85rem;color:rgba(194,220,237,0.6);line-height:1.5;}
+
+/* ACTE IV — RÔLE ET APPORTS RP (ELLIPSES) */
 #act4{min-height:80vh;padding:8rem 3rem;max-width:1100px;margin:0 auto;display:flex;flex-direction:column;justify-content:center;}
-.vision-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:3rem;}
-.v-cell{
-  background:rgba(194,220,237,0.02);border: 1px solid rgba(194,220,237,0.06);
-  border-radius: 40% 60% 70% 30% / 50% 40% 60% 50%;
-  padding:4rem 3rem;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
-  opacity:0;transform:translateY(20px);transition:opacity 0.8s ease,transform 0.8s ease,background 0.3s;
-}
+.vision-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(400px, 1fr));gap:30px;margin-top:3rem;}
+.v-cell{background:rgba(194,220,237,0.02);border:1px solid rgba(194,220,237,0.06);border-radius:40% 60% 70% 30% / 50% 40% 60% 50%;padding:4rem 3rem;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;opacity:0;transform:translateY(20px);transition:opacity 0.8s ease,transform 0.8s ease,background 0.3s;}
 .v-cell.on{opacity:1;transform:translateY(0);}
 .v-cell:hover{background:rgba(194,220,237,0.04);border-color:rgba(194,220,237,0.2);transform:translateY(-5px);}
 .v-n{font-family:var(--mono);font-size:8px;letter-spacing:0.3em;color:rgba(194,220,237,0.3);margin-bottom:1rem;}
-.v-q{font-family:var(--fell);font-style:italic;font-size:1.3rem;color:var(--ink);line-height:1.3;margin-bottom:1rem;}
+.v-q{font-family:var(--fell);font-style:italic;font-size:1.4rem;color:var(--ink);line-height:1.2;margin-bottom:1rem;}
 .v-a{font-size:0.9rem;color:rgba(194,220,237,0.6);line-height:1.7;}
 
-/* ACTE V — CLÔTURE */
-#act5{min-height:60vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6rem 3rem;text-align:center;border-top:1px solid rgba(194,220,237,0.04);}
+/* ACTE V — OBJECTIFS (NOUVEAU MODULE) */
+#act5{min-height:100vh;padding:8rem 3rem;max-width:1000px;margin:0 auto;display:flex;flex-direction:column;justify-content:center;}
+.obj-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));gap:2rem;margin-top:3rem;}
+.obj-col{background:rgba(194,220,237,0.02);border:1px solid rgba(194,220,237,0.05);border-radius:20px;padding:2.5rem;opacity:0;transform:translateY(20px);transition:all 0.8s ease;}
+.obj-col.on{opacity:1;transform:translateY(0);}
+.obj-col:hover{border-color:rgba(194,220,237,0.2);}
+.obj-cat{font-family:var(--mono);font-size:10px;letter-spacing:0.3em;color:var(--ink);text-transform:uppercase;margin-bottom:2rem;text-align:center;border-bottom:1px solid rgba(194,220,237,0.1);padding-bottom:1rem;}
+.obj-item{margin-bottom:2rem;}
+.obj-item:last-child{margin-bottom:0;}
+.obj-item-title{font-family:var(--fell);font-style:italic;font-size:1.2rem;color:var(--ink);margin-bottom:0.5rem;}
+.obj-item-txt{font-size:0.85rem;color:rgba(194,220,237,0.6);}
+
+/* ACTE VI — CLÔTURE */
+#act6{min-height:60vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6rem 3rem;text-align:center;border-top:1px solid rgba(194,220,237,0.04);}
 .closing-line{font-family:var(--fell);font-style:italic;font-size:clamp(1.2rem,2.5vw,1.8rem);color:rgba(194,220,237,0.6);line-height:1.8;max-width:800px;opacity:0;transition:opacity 1.2s ease;}
 .closing-line.on{opacity:1;}
 .closing-sig{margin-top:3rem;font-family:var(--mono);font-size:8px;letter-spacing:0.4em;color:rgba(194,220,237,0.3);text-transform:uppercase;opacity:0;transition:opacity 1s ease 0.5s;}
@@ -141,33 +126,67 @@ nav::before{content:'';position:absolute;inset:0;background:rgba(17,24,34,0.85);
 <nav>
   <div class="nav-id">_dossier.psychologique / gojo</div>
   <ul class="nav-links">
-    <li><a href="#act1">ouverture</a></li>
-    <li><a href="#act2">psyché</a></li>
-    <li><a href="#act3">histoire</a></li>
-    <li><a href="#act4">objectifs</a></li>
+    <li><a href="#act1">profil</a></li>
+    <li><a href="#act2">histoire</a></li>
+    <li><a href="#act3">psychologie</a></li>
+    <li><a href="#act4">rôle rp</a></li>
+    <li><a href="#act5">objectifs</a></li>
   </ul>
 </nav>
 
 <div class="page">
 
 <section id="act1">
-  <div class="act-num">acte i / présentation</div>
+  <div class="act-num">acte i / présentation & personnalité</div>
   <div class="big-name" id="hero-name">
     <em>Gojo</em>
     [ Shigure ]
   </div>
-  <p class="tagline" id="hero-tagline">
-    Quatorze ans. Sang pur. Ce n'est pas un personnage qui se présente avec fracas. Il arrive décontracté, souriant, l'air de quelqu'un qui n'a rien à prouver — et c'est précisément pour ça qu'il est difficile à cerner.<br><br>
-    Derrière la nonchalance, il y a quelqu'un qui observe tout, retient tout, et ne montre que ce qu'il décide de montrer. Il est le produit de deux mondes : le sang le plus puissant, et la dureté du monde réel.
-  </p>
-  <div class="scroll-word">descendre</div>
+  
+  <div class="intro-text" id="hero-tagline">
+    <div class="intro-h">Quatorze ans. Sang pur.</div>
+    <p class="intro-p">Ce n'est pas un personnage qui se présente avec fracas. Il arrive décontracté, souriant, l'air de quelqu'un qui n'a rien à prouver — et c'est précisément pour ça qu'il est difficile à cerner. Derrière la nonchalance, il y a quelqu'un qui observe tout, retient tout, et ne montre que ce qu'il décide de montrer.</p>
+    <p class="intro-p">Il est le produit de deux mondes que le clan Gojo ne mélange habituellement pas : le sang le plus puissant de la société des exorcistes, et cinq années passées loin de cette société, au contact du monde réel. Cette dualité n'est pas un accident. C'est une décision du clan — et c'est ce qui fait de Shigure quelqu'un d'unique dans sa lignée.</p>
+    
+    <div class="intro-h">Sous la surface</div>
+    <p class="intro-p">Sous la décontraction, il y a quelqu'un de profondément convaincu. Pas arrogant au sens creux du terme — convaincu. Il ne doute pas de sa valeur, il ne doute pas de sa direction, et il ne doute absolument pas de là où il va finir : à la tête du clan. Il croit sincèrement en l'importance de la vie humaine. Il a vu ce que ça coûte quand on l'oublie.</p>
+    <p class="intro-p">La vraie fissure, celle qu'il ne perçoit pas encore lui-même, c'est que cette logique — <em>je suis supérieur donc je dois bien diriger</em> — est exactement la même que celle du clan qu'il critique.</p>
+  </div>
 </section>
 
 <div class="curtain"></div>
 
 <section id="act2" class="act-reveal">
-  <div class="act2-label">acte ii / psychologie profonde</div>
-  <div class="act2-title">Cartographie d'un Héritier</div>
+  <div class="story-header">
+    <div class="story-chapter">acte ii / histoire</div>
+    <h2 class="story-h">L'enfant envoyé<br/><em>dehors</em></h2>
+  </div>
+
+  <div class="story-lines">
+    <div class="story-line">
+      <div class="story-time">8 ans</div>
+      <div class="story-txt lead">Il est envoyé hors des cercles du clan. Pas abandonné — accompagné d'un exorciste confirmé, chargé de sa formation et de sa sécurité. Mais concrètement éloigné de tout ce qui fait l'identité Gojo : les traditions, la hiérarchie, le regard des pairs, le poids constant du nom. Le clan veut lui donner une perspective que les manuels ne peuvent pas transmettre.</div>
+    </div>
+    <div class="story-line">
+      <div class="story-time">8 à 13 ans</div>
+      <div class="story-txt">Cinq ans sur le terrain. Il voit l'envers du décor — ce que la société des exorcistes laisse derrière elle quand elle est occupée à être importante. Il ne le vit pas comme un traumatisme, mais comme une information froide et précise. C'est aussi là qu'il découvre une maîtrise instinctive de l'énergie occulte, non pour combattre, mais pour façonner et imprégner.</div>
+    </div>
+    <div class="story-line">
+      <div class="story-time">L'Ancrage</div>
+      <div class="story-txt">Son accompagnateur devient la seule figure stable. Quelqu'un qui lui apprend à se battre et à observer, mais surtout quelqu'un qui lui parle comme à un être humain plutôt que comme à un héritier. Ce rapport-là laisse une trace profonde.</div>
+    </div>
+    <div class="story-line">
+      <div class="story-time">13-14 ans</div>
+      <div class="story-txt lead">Le retour. Il intègre officiellement le clan à quatorze ans. Il arrive avec une conscience aiguë de ce qu'est le monde des exorcistes vu de l'extérieur. Et il arrive avec une raison concrète, ancrée dans du vécu, de penser que le système est défaillant. Pas une théorie. Des souvenirs.</div>
+    </div>
+  </div>
+</section>
+
+<div class="curtain"></div>
+
+<section id="act3" class="act-reveal">
+  <div class="story-chapter" style="text-align:center;">acte iii / psychologie</div>
+  <div class="act3-title">Cartographie Intérieure</div>
 
   <div class="mindmap-wrap" id="mindmap">
     <div class="node-center" id="node-center">
@@ -176,64 +195,41 @@ nav::before{content:'';position:absolute;inset:0;background:rgba(17,24,34,0.85);
     </div>
 
     <div class="nodes-grid" id="nodes-grid">
-      <div class="node" data-depth="0.1">
-        <div class="node-tag">le masque</div>
+      <div class="node">
+        <div class="node-tag">Le masque</div>
         <div class="node-title">La nonchalance</div>
         <div class="node-body">Sa première ligne de défense. Il sourit, il plaisante, il a l'air de rien prendre au sérieux. Les gens cessent de chercher ce qui se cache derrière. C'est une armure, pas de la légèreté.</div>
       </div>
-      <div class="node" data-depth="0.3">
-        <div class="node-tag">le désir</div>
+      <div class="node">
+        <div class="node-tag">Le désir</div>
         <div class="node-title">Être vu sans le nom</div>
         <div class="node-body">Ce qu'il veut le plus profondément : que quelqu'un le regarde et voie lui, pas la lignée. Pas "un Gojo prometteur". Juste Shigure. Personne n'y est encore vraiment arrivé.</div>
       </div>
-      <div class="node" data-depth="0.2">
-        <div class="node-tag">la peur</div>
-        <div class="node-title">Devenir le Clan</div>
-        <div class="node-body">Il passe son temps à observer l'arrogance des siens. Et parfois, dans un geste ou une pensée, il se reconnaît dedans. Cette ressemblance le dérange plus qu'il ne l'admet.</div>
+      <div class="node">
+        <div class="node-tag">La peur</div>
+        <div class="node-title">Devenir ce qu'il critique</div>
+        <div class="node-body">Il passe son temps à observer l'arrogance du clan. Et parfois, dans un geste ou une pensée, il se reconnaît dedans. Cette ressemblance le dérange plus qu'il ne l'admet.</div>
       </div>
-      <div class="node tension" data-depth="0.4">
-        <div class="node-tag">la contradiction</div>
-        <div class="node-title">Choix ou Incapacité ?</div>
-        <div class="node-body">Il dit qu'il préfère être seul. Mais il n'a jamais eu le choix d'être autrement. Est-ce qu'il choisit la solitude, ou est-ce qu'il l'habille en choix pour ne pas avoir à l'affronter ?</div>
+      <div class="node">
+        <div class="node-tag">La contradiction</div>
+        <div class="node-title">Seul par choix ?</div>
+        <div class="node-body">Il dit qu'il préfère être seul. Mais il n'a jamais eu le choix d'être autrement. Cinq ans avec un seul accompagnateur, puis une intégration à part. Habille-t-il cela en choix pour ne pas l'affronter ?</div>
       </div>
-      <div class="node" data-depth="0.15">
-        <div class="node-tag">la colère</div>
+      <div class="node">
+        <div class="node-tag">La colère</div>
         <div class="node-title">Ce qu'il a vu</div>
         <div class="node-body">Des civils morts. Des missions non faites. Un système qui se dit protecteur et qui regarde ailleurs. Il n'en parle jamais. Mais ça ne part pas. C'est le carburant de tout le reste.</div>
       </div>
-      <div class="node" data-depth="0.5">
-        <div class="node-tag">la certitude</div>
-        <div class="node-title">Le Patriarcat</div>
-        <div class="node-body">Sur cette question, pas de nuance. Il sera patriarche. C'est une conviction aussi profonde que son nom, et c'est la seule chose sur laquelle il ne transigera jamais.</div>
+      <div class="node">
+        <div class="node-tag">La certitude</div>
+        <div class="node-title">Le patriarcat</div>
+        <div class="node-body">Sur cette question-là, pas de nuance. Il sera patriarche. C'est une conviction aussi profonde que son nom, et c'est la seule chose sur laquelle il ne transigera jamais.</div>
       </div>
-    </div>
-  </div>
-</section>
-
-<div class="curtain"></div>
-
-<section id="act3" class="act-reveal">
-  <div class="story-header">
-    <div class="story-chapter">acte iii / parcours</div>
-    <h2 class="story-h">L'histoire de<br/><em>l'enfant du dehors</em></h2>
-  </div>
-
-  <div class="story-lines">
-    <div class="story-line">
-      <div class="story-time">8 ans</div>
-      <div class="story-txt lead">L'enfant envoyé dehors. Pas abandonné — accompagné d'un exorciste confirmé. Mais concrètement éloigné de tout ce qui fait l'identité Gojo : les traditions, la hiérarchie, le regard des pairs.</div>
-    </div>
-    <div class="story-line">
-      <div class="story-time">8-13 ans</div>
-      <div class="story-txt">Cinq ans sur le terrain. Il voit l'envers du décor — ce que la société des exorcistes laisse derrière elle quand elle est occupée à être importante. Il le vit comme une information froide, précise, impossible à ignorer.</div>
-    </div>
-    <div class="story-line">
-      <div class="story-time">L'éveil</div>
-      <div class="story-txt">Il découvre une maîtrise instinctive et inhabituellement fine de l'énergie occulte. Pas seulement pour combattre — pour façonner. Pour imprégner. Son accompagnateur, seule figure stable qui lui parle comme à un humain, le remarque.</div>
-    </div>
-    <div class="story-line">
-      <div class="story-time">13 ans</div>
-      <div class="story-txt lead">Le retour. Il est rappelé et intègre officiellement le clan à quatorze ans. Il arrive avec une raison concrète, ancrée dans du vécu, de penser que le système est défaillant. Pas une théorie. Des souvenirs.</div>
+      <div class="node">
+        <div class="node-tag">L'inconnue</div>
+        <div class="node-title">Jusqu'où ira-t-il</div>
+        <div class="node-body">La question à laquelle lui-même ne peut pas encore répondre. Il veut réparer, pas détruire. Mais il n'a pas encore été vraiment testé. À un moment, il le sera.</div>
+      </div>
     </div>
   </div>
 </section>
@@ -241,41 +237,94 @@ nav::before{content:'';position:absolute;inset:0;background:rgba(17,24,34,0.85);
 <div class="curtain"></div>
 
 <section id="act4" class="act-reveal">
-  <div class="story-chapter">acte iv / plan d'action</div>
-  <h2 class="story-h">Rôles RP &<br/><em>Objectifs</em></h2>
+  <div class="story-chapter">acte iv / rôles et apports</div>
+  <h2 class="story-h">Sa place dans<br/><em>l'échiquier</em></h2>
 
   <div class="vision-grid">
     <div class="v-cell">
-      <div class="v-n">// LE PONT ET LE MIROIR</div>
-      <div class="v-q">Le seul capable de circuler entre les cercles.</div>
-      <div class="v-a">Shigure crée des dynamiques entre des sphères hermétiques. Il est inconfortable pour le Clan : quand une décision est prise par réflexe de supériorité, il force à l'assumer à voix haute. Il ne bloque rien, il éclaire.</div>
+      <div class="v-n">// RÔLE 01</div>
+      <div class="v-q">Le Pont</div>
+      <div class="v-a">Le seul personnage capable de circuler naturellement entre les cercles de la société des exorcistes. Il peut être le point de connexion entre des joueurs qui n'auraient aucune raison d'interagir. Il crée des dynamiques transversales.</div>
     </div>
     <div class="v-cell">
-      <div class="v-n">// LE CLAN</div>
-      <div class="v-q">Imposer le clan dans l'espace politique.</div>
-      <div class="v-a">Se rendre indispensable d'abord. Puis, faire entrer le clan Gojo dans les arènes diplomatiques et stratégiques. Que personne ne puisse ignorer les Gojo. Pas par intimidation, mais par présence et légitimité.</div>
+      <div class="v-n">// RÔLE 02</div>
+      <div class="v-q">Le Miroir du Clan</div>
+      <div class="v-a">Il est inconfortable. Quand une décision est prise par réflexe de supériorité, il est celui qui la fait formuler à voix haute. Il partage leur sang, comprend leur vision, mais refuse d'en accepter les angles morts.</div>
     </div>
     <div class="v-cell">
-      <div class="v-n">// L'EXORCISME</div>
-      <div class="v-q">L'artisan anonyme de renom.</div>
-      <div class="v-a">Forger les meilleurs équipements imprégnés d'énergie occulte du marché, en cachant son identité. Pour la liberté, pour récolter des informations, et pour se prouver sa valeur indépendamment de son nom.</div>
+      <div class="v-n">// RÔLE 03</div>
+      <div class="v-q">La Cible du Culte</div>
+      <div class="v-a">Un Gojo qui pense que le système est défaillant. Sur le papier, il est recrutable. En pratique, sa ligne rouge est claire : il veut réparer, pas brûler. Cette ambiguïté crée des opportunités de manipulation et de tensions.</div>
     </div>
     <div class="v-cell">
-      <div class="v-n">// L'ARC PERSONNEL</div>
-      <div class="v-q">Découvrir sa véritable ligne rouge.</div>
-      <div class="v-a">Cible apparente pour le Culte, il veut réparer et non détruire. Trouver quelqu'un qui le voit pour lui-même, vivre avec ses contradictions, et découvrir ce qu'il fera quand les deux seules options seront mauvaises.</div>
+      <div class="v-n">// RÔLE 04</div>
+      <div class="v-q">L'Arc Visible</div>
+      <div class="v-a">Court terme : il observe et prouve sa valeur. Moyen terme : il prend conscience de son rôle de pont, créant des tensions. Long terme : il pèse réellement sur les décisions et choisit qui il est vraiment.</div>
     </div>
   </div>
 </section>
 
 <div class="curtain"></div>
 
-<section id="act5">
+<section id="act5" class="act-reveal">
+  <div class="story-chapter">acte v / le plan</div>
+  <h2 class="story-h">Objectifs<br/><em>RP</em></h2>
+
+  <div class="obj-grid">
+    <div class="obj-col">
+      <div class="obj-cat">Objectifs Clan</div>
+      <div class="obj-item">
+        <div class="obj-item-title">Se rendre indispensable</div>
+        <div class="obj-item-txt">Être celui qui voit ce que les autres ne voient pas. Construire son influence avant même que le clan réalise qu'il en a.</div>
+      </div>
+      <div class="obj-item">
+        <div class="obj-item-title">Imposer le clan</div>
+        <div class="obj-item-txt">Faire entrer le clan dans les arènes politiques et stratégiques. Que personne ne puisse ignorer les Gojo, par légitimité construite et non juste héritée.</div>
+      </div>
+      <div class="obj-item">
+        <div class="obj-item-title">Le Patriarcat</div>
+        <div class="obj-item-txt">Une direction constante. Tout ce qu'il fait converge vers là, et sur ce point, aucune amitié ni loyauté ne prévaut.</div>
+      </div>
+    </div>
+
+    <div class="obj-col">
+      <div class="obj-cat">L'Exorcisme</div>
+      <div class="obj-item">
+        <div class="obj-item-title">L'artisan anonyme</div>
+        <div class="obj-item-txt">Devenir un artisan de renom pour les équipements imprégnés d'énergie occulte, en cachant son identité. Pour la liberté, l'information, et se prouver sa valeur.</div>
+      </div>
+      <div class="obj-item">
+        <div class="obj-item-title">Comprendre l'énergie</div>
+        <div class="obj-item-txt">Pousser sa compréhension de l'énergie occulte plus loin que le clan. Non pour la puissance brute, mais pour comprendre comment elle se lie, se façonne, et s'oriente avec précision chirurgicale.</div>
+      </div>
+    </div>
+
+    <div class="obj-col">
+      <div class="obj-cat">Objectifs Personnels</div>
+      <div class="obj-item">
+        <div class="obj-item-title">Se comprendre</div>
+        <div class="obj-item-txt">Qui est-il sans le nom Gojo ? Qui est-il avec ? Apprendre à vivre avec cette tension sans la résoudre artificiellement.</div>
+      </div>
+      <div class="obj-item">
+        <div class="obj-item-title">Être vu vraiment</div>
+        <div class="obj-item-txt">Trouver des personnes qui le regardent et voient lui. Pas la lignée. Pas l'héritier. Juste Shigure.</div>
+      </div>
+      <div class="obj-item">
+        <div class="obj-item-title">Sa ligne rouge</div>
+        <div class="obj-item-txt">Il sait ce qu'il refuse en théorie. Mais il ne sait pas ce qu'il fera quand les deux seules options seront mauvaises. Ce moment sera le cœur de son arc.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="curtain"></div>
+
+<section id="act6">
   <p class="closing-line" id="closing">
     "Gojo Shigure est un gamin de quatorze ans qui porte la certitude absolue d'être le prochain patriarche, la conviction sincère que le clan qu'il va diriger doit changer, une activité secrète qui prouve qu'il vaut quelque chose sans son nom — et la lucidité rare d'avoir vu le monde tel qu'il est, sans encore avoir vu le reflet de lui-même dedans."
   </p>
   <div class="closing-sig" id="closing-sig">
-    Gojo [ Shigure ] · Sang Pur · Quatorze Ans
+    Gojo [ Shigure ] · Dossier Classifié
   </div>
 </section>
 
@@ -295,12 +344,12 @@ document.addEventListener('mousemove',e=>{
   ring.style.left=rx+'px';ring.style.top=ry+'px';
   requestAnimationFrame(loop);
 })();
-document.querySelectorAll('a,.node,.v-cell').forEach(el=>{
+document.querySelectorAll('a,.node,.v-cell,.obj-col').forEach(el=>{
   el.addEventListener('mouseenter',()=>{cur.style.transform='translate(-50%,-50%) scale(2.5)';ring.style.width='50px';ring.style.height='50px';});
   el.addEventListener('mouseleave',()=>{cur.style.transform='translate(-50%,-50%) scale(1)';ring.style.width='30px';ring.style.height='30px';});
 });
 
-/* ── CANVAS PARTICULES (Re-teintées bleu glacé) ── */
+/* ── CANVAS PARTICULES ── */
 const cv=document.getElementById('bg-canvas');
 const cx=cv.getContext('2d');
 function resize(){cv.width=window.innerWidth;cv.height=window.innerHeight;}
@@ -342,14 +391,14 @@ const pts=Array.from({length:22},()=>({
 
 /* ── INTERSECTION OBSERVER ── */
 setTimeout(()=>document.getElementById('hero-name').classList.add('on'),200);
-setTimeout(()=>document.getElementById('hero-tagline').classList.add('on'),900);
+setTimeout(()=>document.getElementById('hero-tagline').classList.add('on'),800);
 
 const io=new IntersectionObserver(entries=>{
   entries.forEach(e=>{
     if(!e.isIntersecting)return;
     const t=e.target;
     if(t.classList.contains('act-reveal'))t.classList.add('on');
-    if(t.id==='act2'){
+    if(t.id==='act3'){
       const nc=document.getElementById('node-center');
       const nodes=document.querySelectorAll('.node');
       setTimeout(()=>nc.classList.add('sharp'),100);
@@ -358,7 +407,7 @@ const io=new IntersectionObserver(entries=>{
         setTimeout(()=>n.classList.add('sharp'),200+i*180+depth*400);
       });
     }
-    if(t.id==='act3'){
+    if(t.id==='act2'){
       document.querySelectorAll('.story-line').forEach((l,i)=>{
         setTimeout(()=>l.classList.add('on'),i*150);
       });
@@ -369,11 +418,16 @@ const io=new IntersectionObserver(entries=>{
       });
     }
     if(t.id==='act5'){
+      document.querySelectorAll('.obj-col').forEach((c,i)=>{
+        setTimeout(()=>c.classList.add('on'),i*150);
+      });
+    }
+    if(t.id==='act6'){
       setTimeout(()=>document.getElementById('closing').classList.add('on'),200);
       setTimeout(()=>document.getElementById('closing-sig').classList.add('on'),800);
     }
   });
-},{threshold:0.2});
+},{threshold:0.15});
 
 document.querySelectorAll('section[id]').forEach(s=>io.observe(s));
 
